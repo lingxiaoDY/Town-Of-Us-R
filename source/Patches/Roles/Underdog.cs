@@ -6,11 +6,11 @@ namespace TownOfUs.Roles
     {
         public Underdog(PlayerControl player) : base(player)
         {
-            Name = "Underdog";
-            ImpostorText = () => "Use Your Comeback Power To Win";
-            TaskText = () => PerformKill.LastImp() ? "You have a shortened kill cooldown!" : "You have a long kill cooldown until your teammate(s) die";
+            Name = "潜伏者";
+            ImpostorText = () => "伪装者的王牌";
+            TaskText = () => PerformKill.LastImp() ? "你的击杀冷却时间大幅缩短!" : "在你的队友全部死亡前你的击杀冷却时间增加!";
             Color = Patches.Colors.Impostor;
-            RoleType = RoleEnum.Underdog;
+            RoleType = RoleEnum.潜伏者;
             AddToRoleHistory(RoleType);
             Faction = Faction.Impostors;
         }
