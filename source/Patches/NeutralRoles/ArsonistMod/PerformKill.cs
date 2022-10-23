@@ -11,7 +11,7 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
     {
         public static bool Prefix(KillButton __instance)
         {
-            var flag = PlayerControl.LocalPlayer.Is(RoleEnum.Arsonist);
+            var flag = PlayerControl.LocalPlayer.Is(RoleEnum.纵火狂);
             if (!flag) return true;
             if (PlayerControl.LocalPlayer.Data.IsDead) return false;
             if (!PlayerControl.LocalPlayer.CanMove) return false;
@@ -30,9 +30,9 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
 
                 if (role.ClosestPlayerIgnite.IsInfected() || role.Player.IsInfected())
                 {
-                    foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayerIgnite, role.Player);
+                    foreach (var pb in Role.GetRoles(RoleEnum.瘟疫之源)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayerIgnite, role.Player);
                 }
-                if (role.ClosestPlayerIgnite.IsOnAlert() || role.ClosestPlayerIgnite.Is(RoleEnum.Pestilence))
+                if (role.ClosestPlayerIgnite.IsOnAlert() || role.ClosestPlayerIgnite.Is(RoleEnum.万疫之神))
                 {
                     if (role.Player.IsShielded())
                     {
@@ -77,9 +77,9 @@ namespace TownOfUs.NeutralRoles.ArsonistMod
             if (role.DousedPlayers.Contains(role.ClosestPlayerDouse.PlayerId)) return false;
             if (role.ClosestPlayerDouse.IsInfected() || role.Player.IsInfected())
             {
-                foreach (var pb in Role.GetRoles(RoleEnum.Plaguebearer)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayerDouse, role.Player);
+                foreach (var pb in Role.GetRoles(RoleEnum.瘟疫之源)) ((Plaguebearer)pb).RpcSpreadInfection(role.ClosestPlayerDouse, role.Player);
             }
-            if (role.ClosestPlayerDouse.IsOnAlert() || role.ClosestPlayerDouse.Is(RoleEnum.Pestilence))
+            if (role.ClosestPlayerDouse.IsOnAlert() || role.ClosestPlayerDouse.Is(RoleEnum.万疫之神))
             {
                 if (role.Player.IsShielded())
                 {
