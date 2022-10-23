@@ -32,12 +32,12 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
         public static void ExileControllerPostfix(ExileController __instance)
         {
             var exiled = __instance.exiled?.Object;
-            if (!WillBeHaunter.Data.IsDead && exiled.Is(Faction.Crewmates) && !exiled.IsLover()) WillBeHaunter = exiled;
+            if (WillBeHaunter != null && !WillBeHaunter.Data.IsDead && exiled.Is(Faction.Crewmates) && !exiled.IsLover()) WillBeHaunter = exiled;
             if (!PlayerControl.LocalPlayer.Data.IsDead && exiled != PlayerControl.LocalPlayer) return;
-            if (exiled == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.Is(RoleEnum.Jester)) return;
+            if (exiled == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.Is(RoleEnum.小丑)) return;
             if (PlayerControl.LocalPlayer != WillBeHaunter) return;
 
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Haunter))
+            if (!PlayerControl.LocalPlayer.Is(RoleEnum.冤魂))
             {
                 Role.RoleDictionary.Remove(PlayerControl.LocalPlayer.PlayerId);
                 var role = new Haunter(PlayerControl.LocalPlayer);
@@ -47,12 +47,13 @@ namespace TownOfUs.CrewmateRoles.HaunterMod
                 RemoveTasks(PlayerControl.LocalPlayer);
                 PlayerControl.LocalPlayer.MyPhysics.ResetMoveState();
 
-                System.Console.WriteLine("Become Haunter - Haunter");
+                System.Console.WriteLine("变成了冤魂");
 
                 PlayerControl.LocalPlayer.gameObject.layer = LayerMask.NameToLayer("Players");
 
                 var writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,
                     (byte) CustomRPC.HaunterDied, SendOption.Reliable, -1);
+                writer.Write(PlayerControl.LocalPlayer.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
 
