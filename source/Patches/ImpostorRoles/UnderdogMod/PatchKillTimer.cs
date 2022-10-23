@@ -10,7 +10,7 @@ namespace TownOfUs.ImpostorRoles.UnderdogMod
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] float time)
         {
             var role = Role.GetRole(__instance);
-            if (role?.RoleType != RoleEnum.Underdog) return true;
+            if (role?.RoleType != RoleEnum.潜伏者) return true;
             var maxTimer = ((Underdog)role).MaxTimer();
             __instance.killTimer = Mathf.Clamp(time, 0, maxTimer);
             HudManager.Instance.KillButton.SetCoolDown(__instance.killTimer, maxTimer);

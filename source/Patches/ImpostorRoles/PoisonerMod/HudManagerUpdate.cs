@@ -16,7 +16,7 @@ namespace TownOfUs.ImpostorRoles.PoisonerMod
         [HarmonyPriority(Priority.Last)]
         public static void Postfix(HudManager __instance)
         {
-            if (!PlayerControl.LocalPlayer.Is(RoleEnum.Poisoner)) return;
+            if (!PlayerControl.LocalPlayer.Is(RoleEnum.绝命毒师)) return;
             if (PlayerControl.AllPlayerControls.Count <= 1) return;
             if (PlayerControl.LocalPlayer == null) return;
             if (PlayerControl.LocalPlayer.Data == null) return;

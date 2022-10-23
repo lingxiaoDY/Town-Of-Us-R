@@ -25,7 +25,7 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
             {
                 shookAlready = false;
 
-                var blackmailers = Role.AllRoles.Where(x => x.RoleType == RoleEnum.Blackmailer && x.Player != null).Cast<Blackmailer>();
+                var blackmailers = Role.AllRoles.Where(x => x.RoleType == RoleEnum.勒索者 && x.Player != null).Cast<Blackmailer>();
 
                 foreach (var role in blackmailers)
                 {
@@ -75,7 +75,7 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
 
             public static void Postfix(MeetingHud __instance)
             {
-                var blackmailers = Role.AllRoles.Where(x => x.RoleType == RoleEnum.Blackmailer && x.Player != null).Cast<Blackmailer>();
+                var blackmailers = Role.AllRoles.Where(x => x.RoleType == RoleEnum.勒索者 && x.Player != null).Cast<Blackmailer>();
 
                 foreach (var role in blackmailers)
                 {
@@ -100,7 +100,7 @@ namespace TownOfUs.ImpostorRoles.BlackmailerMod
         {
             public static bool Prefix(TextBoxTMP __instance)
             {
-                var blackmailers = Role.AllRoles.Where(x => x.RoleType == RoleEnum.Blackmailer && x.Player != null).Cast<Blackmailer>();
+                var blackmailers = Role.AllRoles.Where(x => x.RoleType == RoleEnum.勒索者 && x.Player != null).Cast<Blackmailer>();
                 foreach (var role in blackmailers)
                 {
                     if (MeetingHud.Instance && role.Blackmailed != null && !role.Blackmailed.Data.IsDead && role.Blackmailed.PlayerId == PlayerControl.LocalPlayer.PlayerId)

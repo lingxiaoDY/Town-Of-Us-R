@@ -23,12 +23,23 @@ namespace TownOfUs.Modifiers.AssassinMod
         {
             if (voteArea.AmDead) return true;
             var player = Utils.PlayerById(voteArea.TargetPlayerId);
-            if (
-                player == null ||
-                player.Data.IsImpostor() ||
-                player.Data.IsDead ||
-                player.Data.Disconnected
-            ) return true;
+            if (PlayerControl.LocalPlayer.Is(Faction.Neutral))
+            {
+                if (
+                    player == null ||
+                    player.Data.IsDead ||
+                    player.Data.Disconnected
+                ) return true;
+            }
+            else
+            {
+                if (
+                    player == null ||
+                    player.Data.IsImpostor() ||
+                    player.Data.IsDead ||
+                    player.Data.Disconnected
+                ) return true;
+            }
             var role = Role.GetRole(player);
             return role != null && role.Criteria();
         }
@@ -49,7 +60,7 @@ namespace TownOfUs.Modifiers.AssassinMod
             var nameText = Object.Instantiate(voteArea.NameText, voteArea.transform);
             voteArea.NameText.transform.localPosition = new Vector3(0.55f, 0.12f, -0.1f);
             nameText.transform.localPosition = new Vector3(0.55f, -0.12f, -0.1f);
-            nameText.text = "Guess";
+            nameText.text = "猜测";
 
             var cycleBack = Object.Instantiate(confirmButton, voteArea.transform);
             var cycleRendererBack = cycleBack.GetComponent<SpriteRenderer>();
@@ -156,7 +167,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                     if (playerModifier != null)
                         toDie = (playerRole.Name == currentGuess || playerModifier.Name == currentGuess) ? playerRole.Player : role.Player;
 
-                if (!toDie.Is(RoleEnum.Pestilence))
+                if (!toDie.Is(RoleEnum.万疫之神) || PlayerControl.LocalPlayer.Is(RoleEnum.万疫之神))
                 {
                     AssassinKill.RpcMurderPlayer(toDie);
                     role.RemainingKills--;
@@ -164,7 +175,7 @@ namespace TownOfUs.Modifiers.AssassinMod
                     if (toDie.IsLover() && CustomGameOptions.BothLoversDie)
                     {
                         var lover = ((Lover)playerModifier).OtherLover.Player;
-                        if (!lover.Is(RoleEnum.Pestilence)) ShowHideButtons.HideSingle(role, lover.PlayerId, false);
+                        if (!lover.Is(RoleEnum.万疫之神)) ShowHideButtons.HideSingle(role, lover.PlayerId, false);
                     }
                 }
             }
@@ -174,7 +185,7 @@ namespace TownOfUs.Modifiers.AssassinMod
 
         public static void Postfix(MeetingHud __instance)
         {
-            foreach (var role in Ability.GetAbilities(AbilityEnum.Assassin))
+            foreach (var role in Ability.GetAbilities(AbilityEnum.刺客))
             {
                 var assassin = (Assassin) role;
                 assassin.Guesses.Clear();
@@ -183,7 +194,7 @@ namespace TownOfUs.Modifiers.AssassinMod
             }
 
             if (PlayerControl.LocalPlayer.Data.IsDead) return;
-            if (!PlayerControl.LocalPlayer.Is(AbilityEnum.Assassin)) return;
+            if (!PlayerControl.LocalPlayer.Is(AbilityEnum.刺客)) return;
 
             var assassinRole = Ability.GetAbility<Assassin>(PlayerControl.LocalPlayer);
             if (assassinRole.RemainingKills <= 0) return;

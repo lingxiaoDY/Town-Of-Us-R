@@ -12,7 +12,7 @@ namespace TownOfUs.ImpostorRoles.UnderdogMod
         public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
         {
             var role = Role.GetRole(__instance);
-            if (role?.RoleType == RoleEnum.Underdog)
+            if (role?.RoleType == RoleEnum.潜伏者)
                 ((Underdog)role).SetKillTimer();
         }
 
